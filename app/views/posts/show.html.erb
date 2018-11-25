@@ -2,100 +2,100 @@
 
     <div class="posts-show">
         <div class="show-top">
-        <div class="event-top">
-            <div class="show-title">
-                <h2><%= @post.title %></h2>
-            </div>
+            <div class="event-top">
+                <div class="show-title">
+                    <h2><%= @post.title %></h2>
+                </div>
         
-            <div class="show-main-image">
-                 <img src="<%= "/images/#{@post.main_image}" %>">
-            </div>
+                <div class="show-main-image">
+                     <img src="<%= "/images/#{@post.main_image}" %>">
+                </div>
             
-            <div class="event-outline">
-                <p><%= @post.outline %></p>
-            </div>
+                <div class="event-outline">
+                    <p><%= @post.outline %></p>
+                </div>
 
-        <div class="info-box">
-            <div class="tg-number">
-                <div>募集人数</div>
-                    <p><%= @post.target_number %>人</p>
+                <div class="info-box">
+                    <div class="tg-number">
+                        <div>募集人数</div>
+                            <p><%= @post.target_number %>人</p>
+                    </div>
+                    
+                    <div class="join-number">  
+                        <div>現在の参加人数</div>
+                            <p><%= @number %>人</p>
+                    </div>
+                    
+                    <div class="close-date">
+                        <div>募集終了まで残り</div>
+                            <p>◯日</p>
+                    </div>
+                    
+                    
+                    <div class="like">
+                        <% if @current_user == nil %>
+                            <%= link_to("/users/login_form") do %>
+                            <span class="fa fa-heart like-btn">お気に入り</span>
+                            <% end %>   
+                        <% elsif Like.find_by(user_id: @current_user.id, post_id: @post.id) %>
+                            <%= link_to("/likes/#{@post.id}/destroy",{method: "post"}) do %>
+                            <span class="fa fa-heart like-btn-unlike">お気に入り</span>
+                            <% end %>
+                        <% else %>
+                            <%= link_to("/likes/#{@post.id}/create",{method: "post"}) do %>
+                            <span class="fa fa-heart like-btn">お気に入り</span>
+                        <% end %>
+                        <% end %>
+                    </div>
+                </div> 
             </div>
-            
-            <div class="join-number">  
-                <div>現在の参加人数</div>
-                    <p><%= @number %>人</p>
+        </div>
+      
+      <div class="postsshow-main">
+      
+    　    <section class="show-container">
+            <div class="event-main">
+                <div class="event-mssage">
+                    <p><%= @post.content %></p>
+                </div>
             </div>
-            
-            <div class="close-date">
-                <div>募集終了まで残り</div>
-                    <p>◯日</p>
-            </div>
-            
-            
-            <div class="like">
-                <% if @current_user == nil %>
-                    <%= link_to("/users/login_form") do %>
-                    <span class="fa fa-heart like-btn">お気に入り</span>
-                    <% end %>   
-                <% elsif Like.find_by(user_id: @current_user.id, post_id: @post.id) %>
-                    <%= link_to("/likes/#{@post.id}/destroy",{method: "post"}) do %>
-                    <span class="fa fa-heart like-btn-unlike">お気に入り</span>
-                    <% end %>
-                <% else %>
-                    <%= link_to("/likes/#{@post.id}/create",{method: "post"}) do %>
-                    <span class="fa fa-heart like-btn">お気に入り</span>
-                <% end %>
-                <% end %>
-            </div>
-        </div> 
+          </section>
         
-        
-        
-    </div>
-        
-</div>
-
-　<div class="show-container clearfix">
-    <div class="event-main">
-        <div class="event-mssage">
-            <p><%= @post.content %></p>
-        </div>
-    </div>
-    
-    <div class="user-profile">
-        <div class="prof-icon">
-            <img src="<%= "/images/#{@user.image_name}" %>">
-        </div>
-        <div class="prof-content">
-            <p class="eventer-residence">
-                <%= @user.residence %>
-            </p>
-            
-            <p class="eventer">イベント投稿者</p>
-                <%= @user.name %>
-            
-            <div class="userprof">
-            <p>プロフィール</p>
-                <%= @user.profile %>
+          <section class="sidebar">
+            <div class="user-profile">
+                <div class="prof-icon">
+                    <img src="<%= "/images/#{@user.image_name}" %>">
+                </div>
+                <div class="prof-content">
+                    <p class="eventer">イベント投稿者</p>
+                        <%= @user.name %>
+                    
+                    <div class="userprof">
+                        <p>プロフィール</p>
+                        <p class="userprof_box"><%= @user.profile %></p>
+                    </div>
+                    
+                    
+                    <div class="prof-show">
+                    <%= link_to("プロフィールを見る","/users/#{@user.id}" ,:class => "prof-btn") %>
+                    </div>
+                </div>
             </div>
             
-            
-            <div class="prof-show">
-            <%= link_to("プロフィールを見る","/users/#{@user.id}" ,:class => "prof-btn") %>
+            <div class="participate-box">
+                <div class="join-box">
+                    <div>現在の参加人数</div>
+                    <p><%= @number %>/<%= @post.target_number %></p>
+                </div>
+                
+                <!--<div class="join-btnbox">-->
+                    <%= link_to("このイベントに参加する", "/event_joins/#{@post.id}/new" ,:class => "join-btn") %>
+                <!--</div>-->
             </div>
-        </div>
-    </div>
-    
-    <div class="participate-box">
-        <div class="join-box">
-            <div>現在の参加人数</div>
-                <p><%= @number %>/<%= @post.target_number %></p>
-        </div>
-        <div class="join-btnbox">
-            <%= link_to("このイベントに参加する", "/event_joins/#{@post.id}/new" ,:class => "join-btn") %>
-        </div>
-    </div>
-  </div>
-</div>    
+           </section>
+           <div style="clear:both;"></div>
+       </div>
+      </div>
+    </div>    
 
 <%= render 'footer' %>
