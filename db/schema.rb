@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_19_133010) do
+ActiveRecord::Schema.define(version: 2018_12_05_124611) do
 
   create_table "circles", force: :cascade do |t|
     t.string "title"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2018_09_19_133010) do
     t.integer "target_money"
     t.string "main_image"
     t.integer "event_cat"
-    t.datetime "event_date"
+    t.date "event_date"
     t.text "outline"
     t.string "image_name"
     t.string "category"

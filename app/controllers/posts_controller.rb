@@ -3,6 +3,10 @@ class PostsController < ApplicationController
   before_action :authenticate_user ,{only:[:new, :edit, :update, :create]}
   before_action :forbid_login_user, {only: [:login_form, :login]}
   
+  
+  require 'date'
+
+
   def index
   end
   
@@ -57,8 +61,11 @@ class PostsController < ApplicationController
       @user = User.find_by(id: @post.user_id)
       @join = EventJoin.where(post_id: params[:id])
       @number = EventJoin.where(post_id: params[:id]).count
-  end
-  
+      logger.debug("=====================- today = #{Date.today}")
+      logger.debug("=====================- event_date = #{@post.event_date}")
+
+      @date = (@post.event_date - Date.today).to_i 
+    end
   
   
   def edit
