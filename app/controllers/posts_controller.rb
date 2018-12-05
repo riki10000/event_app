@@ -56,7 +56,7 @@ class PostsController < ApplicationController
       @post = Post.find_by(id: params[:id])
       @user = User.find_by(id: @post.user_id)
       @join = EventJoin.where(post_id: params[:id])
-      @number = EventJoin.where(user_id: params[:id]).count
+      @number = EventJoin.where(post_id: params[:id]).count
   end
   
   
